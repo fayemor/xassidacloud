@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xassida Cloud</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #7f7fd5, #86a8e7, #91eae4);
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .header {
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #007bff;
+            display: flex;
+            align-items: center;
+        }
+
+        .header .logo i {
+            margin-right: 10px;
+        }
+
+        .container {
+            margin: 40px auto;
+            width: 90%;
+            max-width: 1000px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .hero {
+            padding: 20px;
+            text-align: center;
+            background: #007bff;
+            color: white;
+        }
+
+        .hero h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        .search-bar {
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .search-bar input {
+            width: 70%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .search-bar button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .search-bar button:hover {
+            background: #0056b3;
+        }
+
+        .document-list {
+            padding: 20px;
+        }
+
+        .document-list ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .document-list li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 10px 0;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .document-list li i {
+            margin-right: 10px;
+            color: #007bff;
+        }
+
+        .document-list a {
+            text-decoration: none;
+            color: #333;
+            flex-grow: 1;
+        }
+
+        .document-list a:hover {
+            text-decoration: underline;
+        }
+
+        .document-list button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .document-list button:hover {
+            background: #218838;
+        }
+
+        footer {
+            background: #007bff;
+            color: white;
+            text-align: center;
+            padding: 10px 20px;
+            margin-top: 20px;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .search-bar input {
+                width: 60%;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .document-list li {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .document-list button {
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo">
+            <i class="fas fa-cloud"></i> Xassida Cloud
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="hero">
+            <h1>Bienvenue dans Xassida Cloud</h1>
+            <p>La bibliothèque numérique des Xassidas.</p>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search for a document...">
+            <button onclick="searchDocuments()">Rechercher</button>
+        </div>
+
+        <div class="document-list">
+            <h2>Documents disponibles</h2>
+            <ul id="fileList">
+                <!-- Documents will be dynamically listed here -->
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Xassida Cloud. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const documents = [
+            {name: "Mawahibou", url: "https://drive.google.com/file/d/1xlrAwOVHIzlOES2VsM2TRJcOTM9__C6R/view?usp=drive_link"},
+            {name: "Xassida 2.pdf", url: "#"},
+            {name: "Xassida 3.pdf", url: "#"},
+            {name: "Xassida 1.pdf", url: "#"},
+            {name: "Xassida 2.pdf", url: "#"},
+            {name: "Xassida 3.pdf", url: "#"},
+            {name: "Xassida 1.pdf", url: "#"},
+            {name: "Xassida 2.pdf", url: "#"},
+            {name: "Xassida 3.pdf", url: "#"},
+            {name: "Xassida 1.pdf", url: "#"},
+            {name: "Xassida 2.pdf", url: "#"},
+            {name: "Xassida 3.pdf", url: "#"},
+            {name: "Xassida 1.pdf", url: "#"},
+            {name: "Xassida 2.pdf", url: "#"},
+            {name: "Xassida 3.pdf", url: "#"},
+            {name: "Xassida 1.pdf", url: "#"},
+            {name: "Xassida 2.pdf", url: "#"},
+            {name: "Xassida 3.pdf", url: "#"},
+            {name: "Xassida 1.pdf", url: "#"},
+            {name: "Xassida 2.pdf", url: "#"},
+            {name: "Xassida 3.pdf", url: "#"},
+            {name: "Xassida 1.pdf", url: "#"},
+            {name: "Xassida 2.pdf", url: "#"},
+            {name: "Xassida 3.pdf", url: "#"},
+            {name: "Xassida 1.pdf", url: "#"},
+            {name: "Xassida 2.pdf", url: "#"},
+            {name: "Xassida 3.pdf", url: "#"},
+            {name: "Xassida 4.pdf", url: "#"}
+        ];
+
+        const fileList = document.getElementById('fileList');
+        const searchInput = document.getElementById('searchInput');
+
+        function displayDocuments(filteredDocs) {
+            fileList.innerHTML = '';
+            filteredDocs.forEach(doc => {
+                const listItem = document.createElement('li');
+                const icon = document.createElement('i');
+                icon.className = 'fas fa-file-pdf';
+                const link = document.createElement('a');
+                link.href = doc.url;
+                link.download = doc.name;
+                link.textContent = doc.name;
+                const downloadButton = document.createElement('button');
+                downloadButton.textContent = 'Download';
+                downloadButton.onclick = () => {
+                    window.location.href = doc.url;
+                };
+                listItem.appendChild(icon);
+                listItem.appendChild(link);
+                listItem.appendChild(downloadButton);
+                fileList.appendChild(listItem);
+            });
+        }
+
+        function searchDocuments() {
+            const query = searchInput.value.toLowerCase();
+            const filteredDocs = documents.filter(doc => doc.name.toLowerCase().includes(query));
+            displayDocuments(filteredDocs);
+        }
+        // Display all documents on page load
+        displayDocuments(documents);
+    </script>
+</body>
+
+</html>
