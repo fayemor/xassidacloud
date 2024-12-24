@@ -32,7 +32,9 @@
             align-items: center;
         }
 
-        .header .logo i {
+        .header .logo img {
+            width: 30px;
+            height: 30px;
             margin-right: 10px;
         }
 
@@ -44,6 +46,16 @@
             border-radius: 10px;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
             overflow: hidden;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
 
         .hero {
@@ -71,6 +83,11 @@
             border: 1px solid #ddd;
             border-radius: 5px;
             font-size: 1rem;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .search-bar input:focus {
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
         }
 
         .search-bar button {
@@ -106,6 +123,11 @@
             background: #f9f9f9;
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .document-list li:hover {
+            transform: scale(1.02);
         }
 
         .document-list li i {
@@ -150,7 +172,6 @@
             font-size: 0.9rem;
         }
 
-        /* Responsive Design */
         @media (max-width: 768px) {
             .search-bar input {
                 width: 60%;
@@ -175,7 +196,8 @@
 <body>
     <header class="header">
         <div class="logo">
-            <i class="fas fa-cloud"></i> Xassida Cloud
+            <img src="logo.png" alt="Logo">
+            Xassida Cloud
         </div>
     </header>
 
@@ -186,7 +208,7 @@
         </div>
 
         <div class="search-bar">
-            <input type="text" id="searchInput" placeholder="Search for a document...">
+            <input type="text" id="searchInput" placeholder="Rechercher un document...">
             <button onclick="searchDocuments()">Rechercher</button>
         </div>
 
@@ -204,12 +226,12 @@
 
     <script>
         const documents = [
-            {name: "Mawahibou", url: "https://drive.google.com/file/d/1xlrAwOVHIzlOES2VsM2TRJcOTM9__C6R/view?usp=drive_link"},
-            {name: "Astahfiroulaaha bihi", url: "https://drive.google.com/file/d/1qf5oADDfKhq4uPcF-Pd8lV2SegFRc_VP/view?usp=drive_link"},
-            {name: "Achinou", url: "https://drive.google.com/file/d/1qf5oADDfKhq4uPcF-Pd8lV2SegFRc_VP/view?usp=drive_link"},
-            {name: "Ahazani", url: "https://drive.google.com/file/d/1g--qJOomHUdgBSEh4a9tPleRMWSSMbtB/view?usp=drive_link"},
-            {name: "Adjabani", url: "https://drive.google.com/file/d/1JwTrIf1Gmx7hriJpb_txbAG9UcsujJpK/view?usp=drive_link"},
-            {name: "Ahmadou mouniyane", url: "https://drive.google.com/file/d/1bq_9_kmPO9y76_-YkIHL8LRcmhnWKjby/view?usp=drive_link"}
+            { name: "Mawahibou", url: "https://drive.google.com/file/d/1xlrAwOVHIzlOES2VsM2TRJcOTM9__C6R/view?usp=drive_link" },
+            { name: "Astahfiroulaaha bihi", url: "https://drive.google.com/file/d/1qf5oADDfKhq4uPcF-Pd8lV2SegFRc_VP/view?usp=drive_link" },
+            { name: "Achinou", url: "https://drive.google.com/file/d/1qf5oADDfKhq4uPcF-Pd8lV2SegFRc_VP/view?usp=drive_link" },
+            { name: "Ahazani", url: "https://drive.google.com/file/d/1g--qJOomHUdgBSEh4a9tPleRMWSSMbtB/view?usp=drive_link" },
+            { name: "Adjabani", url: "https://drive.google.com/file/d/1JwTrIf1Gmx7hriJpb_txbAG9UcsujJpK/view?usp=drive_link" },
+            { name: "Ahmadou mouniyane", url: "https://drive.google.com/file/d/1bq_9_kmPO9y76_-YkIHL8LRcmhnWKjby/view?usp=drive_link" }
         ];
 
         const fileList = document.getElementById('fileList');
@@ -226,7 +248,7 @@
                 link.download = doc.name;
                 link.textContent = doc.name;
                 const downloadButton = document.createElement('button');
-                downloadButton.textContent = 'Download';
+                downloadButton.textContent = 'Télécharger';
                 downloadButton.onclick = () => {
                     window.location.href = doc.url;
                 };
@@ -239,9 +261,10 @@
 
         function searchDocuments() {
             const query = searchInput.value.toLowerCase();
-            const filteredDocs = documents.filter(doc => doc.name.toLowerCase().includes(query));
+            const filteredDocs = query ? documents.filter(doc => doc.name.toLowerCase().includes(query)) : documents;
             displayDocuments(filteredDocs);
         }
+
         // Display all documents on page load
         displayDocuments(documents);
     </script>
