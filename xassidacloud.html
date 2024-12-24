@@ -173,6 +173,14 @@
             font-size: 0.9rem;
         }
 
+        /* Style du message de "Ce xassida n'est pas encore disponible" */
+        .no-results {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #f44336;
+            margin-top: 20px;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .search-bar input {
@@ -216,8 +224,9 @@
         <div class="document-list">
             <h2>Documents disponibles</h2>
             <ul id="fileList">
-                <!-- Documents will be dynamically listed here -->
+                <!-- Documents seront ajoutés ici -->
             </ul>
+            <div id="noResultsMessage" class="no-results" style="display: none;">Ce xassida n'est pas encore disponible</div>
         </div>
     </div>
 
@@ -237,35 +246,41 @@
 
         const fileList = document.getElementById('fileList');
         const searchInput = document.getElementById('searchInput');
+        const noResultsMessage = document.getElementById('noResultsMessage');
 
         function displayDocuments(filteredDocs) {
             fileList.innerHTML = '';
-            filteredDocs.forEach(doc => {
-                const listItem = document.createElement('li');
-                const icon = document.createElement('i');
-                icon.className = 'fas fa-file-pdf';
-                const link = document.createElement('a');
-                link.href = doc.url;
-                link.download = doc.name;
-                link.textContent = doc.name;
-                const downloadButton = document.createElement('button');
-                const loadingText = document.createElement('span');
-                loadingText.className = 'loading';
-                loadingText.textContent = 'Loading...';
-                downloadButton.textContent = 'Download';
-                downloadButton.appendChild(loadingText);
-                downloadButton.onclick = () => {
-                    loadingText.style.display = 'inline';
-                    setTimeout(() => {
-                        window.location.href = doc.url;
-                        loadingText.style.display = 'none';
-                    }, 1500);
-                };
-                listItem.appendChild(icon);
-                listItem.appendChild(link);
-                listItem.appendChild(downloadButton);
-                fileList.appendChild(listItem);
-            });
+            if (filteredDocs.length === 0) {
+                noResultsMessage.style.display = 'block'; // Afficher le message si aucun résultat
+            } else {
+                noResultsMessage.style.display = 'none'; // Cacher le message si des résultats existent
+                filteredDocs.forEach(doc => {
+                    const listItem = document.createElement('li');
+                    const icon = document.createElement('i');
+                    icon.className = 'fas fa-file-pdf';
+                    const link = document.createElement('a');
+                    link.href = doc.url;
+                    link.download = doc.name;
+                    link.textContent = doc.name;
+                    const downloadButton = document.createElement('button');
+                    const loadingText = document.createElement('span');
+                    loadingText.className = 'loading';
+                    loadingText.textContent = 'Loading...';
+                    downloadButton.textContent = 'Download';
+                    downloadButton.appendChild(loadingText);
+                    downloadButton.onclick = () => {
+                        loadingText.style.display = 'inline';
+                        setTimeout(() => {
+                            window.location.href = doc.url;
+                            loadingText.style.display = 'none';
+                        }, 1500);
+                    };
+                    listItem.appendChild(icon);
+                    listItem.appendChild(link);
+                    listItem.appendChild(downloadButton);
+                    fileList.appendChild(listItem);
+                });
+            }
         }
 
         function searchDocuments() {
@@ -273,7 +288,8 @@
             const filteredDocs = documents.filter(doc => doc.name.toLowerCase().includes(query));
             displayDocuments(filteredDocs);
         }
-        // Display all documents on page load
+
+        // Afficher tous les documents au chargement de la page
         displayDocuments(documents);
     </script>
 </body>
