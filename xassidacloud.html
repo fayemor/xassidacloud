@@ -32,9 +32,7 @@
             align-items: center;
         }
 
-        .header .logo img {
-            width: 30px;
-            height: 30px;
+        .header .logo i {
             margin-right: 10px;
         }
 
@@ -46,16 +44,6 @@
             border-radius: 10px;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
             overflow: hidden;
-            animation: fadeIn 1s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
         }
 
         .hero {
@@ -68,6 +56,18 @@
         .hero h1 {
             margin: 0;
             font-size: 2.5rem;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .search-bar {
@@ -83,11 +83,6 @@
             border: 1px solid #ddd;
             border-radius: 5px;
             font-size: 1rem;
-            transition: box-shadow 0.3s ease;
-        }
-
-        .search-bar input:focus {
-            box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
         }
 
         .search-bar button {
@@ -123,11 +118,6 @@
             background: #f9f9f9;
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .document-list li:hover {
-            transform: scale(1.02);
         }
 
         .document-list li i {
@@ -153,10 +143,21 @@
             border-radius: 5px;
             cursor: pointer;
             transition: background 0.3s;
+            position: relative;
         }
 
         .document-list button:hover {
             background: #218838;
+        }
+
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+            font-size: 0.8rem;
+            color: #007bff;
         }
 
         footer {
@@ -172,6 +173,7 @@
             font-size: 0.9rem;
         }
 
+        /* Responsive Design */
         @media (max-width: 768px) {
             .search-bar input {
                 width: 60%;
@@ -196,8 +198,7 @@
 <body>
     <header class="header">
         <div class="logo">
-            <img src="logo.png" alt="Logo">
-            Xassida Cloud
+            <i class="fas fa-cloud"></i> Xassida Cloud
         </div>
     </header>
 
@@ -208,12 +209,12 @@
         </div>
 
         <div class="search-bar">
-            <input type="text" id="searchInput" placeholder="Rechercher un document...">
+            <input type="text" id="searchInput" placeholder="Search for a document...">
             <button onclick="searchDocuments()">Rechercher</button>
         </div>
 
         <div class="document-list">
-            <h2>Xassidas disponibles</h2>
+            <h2>Documents disponibles</h2>
             <ul id="fileList">
                 <!-- Documents will be dynamically listed here -->
             </ul>
@@ -221,7 +222,7 @@
     </div>
 
     <footer>
-        <p>&copy; 2024 XassidaCloud. All rights reserved.</p>
+        <p>&copy; 2024 Xassida Cloud. All rights reserved.</p>
     </footer>
 
     <script>
@@ -248,9 +249,17 @@
                 link.download = doc.name;
                 link.textContent = doc.name;
                 const downloadButton = document.createElement('button');
-                downloadButton.textContent = 'Télécharger';
+                const loadingText = document.createElement('span');
+                loadingText.className = 'loading';
+                loadingText.textContent = 'Loading...';
+                downloadButton.textContent = 'Download';
+                downloadButton.appendChild(loadingText);
                 downloadButton.onclick = () => {
-                    window.location.href = doc.url;
+                    loadingText.style.display = 'inline';
+                    setTimeout(() => {
+                        window.location.href = doc.url;
+                        loadingText.style.display = 'none';
+                    }, 1500);
                 };
                 listItem.appendChild(icon);
                 listItem.appendChild(link);
@@ -261,10 +270,9 @@
 
         function searchDocuments() {
             const query = searchInput.value.toLowerCase();
-            const filteredDocs = query ? documents.filter(doc => doc.name.toLowerCase().includes(query)) : documents;
+            const filteredDocs = documents.filter(doc => doc.name.toLowerCase().includes(query));
             displayDocuments(filteredDocs);
         }
-
         // Display all documents on page load
         displayDocuments(documents);
     </script>
